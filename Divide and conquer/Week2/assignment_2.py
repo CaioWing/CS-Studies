@@ -1,4 +1,16 @@
 def count_split_inv(B : list, C : list):
+    """
+    The function `count_split_inv` takes two sorted lists `B` and `C` as input and returns a merged list
+    `D` and the count of split inversions `Z`.
+    
+    :param B: B is a list of integers
+    :type B: list
+    :param C: The parameter C is a list
+    :type C: list
+    :return: a tuple containing two values. The first value is a list `D` which is the merged and sorted
+    list of `B` and `C`. The second value is an integer `Z` which represents the count of split
+    inversions between `B` and `C`.
+    """
     i = 0
     j = 0
     D = []
@@ -17,6 +29,15 @@ def count_split_inv(B : list, C : list):
     return D, Z
 
 def count_array(A : list):
+    """
+    The function "count_array" recursively divides an input list into two halves, counts the number of
+    inversions in each half, and then counts the number of split inversions between the two halves.
+    
+    :param A: A is a list of integers
+    :type A: list
+    :return: The function `count_array` returns a tuple containing two elements. The first element is
+    the sorted array `D`, and the second element is the count of inversions `x + y + z`.
+    """
     if len(A) == 1:
         return A, 0
     else:
