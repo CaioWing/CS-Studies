@@ -142,4 +142,12 @@ oldest date in the list*)
 fun oldest(dates : (int*int*int) list) =
     if null dates
     then NONE
-    else
+    else 
+        let val tl_ans = oldest(tl dates)
+        in 
+            if isSome tl_ans andalso data2days(valOf tl_ans) < data2days(hd dates)
+            then tl_ans
+            else SOME (hd dates)
+        end
+
+(*TODO: challenge problems*)
