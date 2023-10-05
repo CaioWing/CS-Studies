@@ -15,10 +15,18 @@ if the first argument is a date that comes begore the second argument
 
 (int * int * int), (int * int* int) -> boolean *)
 
-fun is_older(date1 : int * int * int, date2 : int * int * int) =
-    if (data2days date1 < data2days date2)
-    then true
-    else false
+fun is_older (date1 : int * int * int, date2 : int * int * int) =
+    let 
+        val y1 = #1 date1
+        val m1 = #2 date1
+        val d1 = #3 date1
+        val y2 = #1 date2
+        val m2 = #2 date2
+        val d2 = #3 date2
+    in
+        y1 < y2 orelse (y1=y2 andalso m1 < m2)
+                orelse (y1=y2 andalso m1=m2 andalso d1 < d2)
+    end 
 
 
 (*Exercise 2: takes a list of dates and a month and returns how many dates in the
@@ -108,12 +116,11 @@ fun number_before_reaching_sum(sum : int, numbers : int list) =
 
 (*int -> string*)
 
-fun what_month(day : int) =
-    let val days_month = 31
+fun what_month (day_of_year : int) =
+    let 
+	     val month_lengths = [31,28,31,30,31,30,31,31,30,31,30,31]
     in
-        if (day mod days_month) = 0
-        then day div days_month 
-        else (day div days_month) + 1
+	     1 + number_before_reaching_sum(day_of_year, month_lengths)
     end
 
 (*Exercise 10: takes two days of the year, day1 and day2 and returns an int list [m1, m2, ..., mn] 
@@ -122,16 +129,10 @@ the result will have length day2 - day1 + 1 or length 0 if day1 > day2*)
 
 (* int, int -> int list*)
 
-fun month_range(day1 : int, day2 : int) =
+fun month_range (day1 : int, day2 : int) =
     if day1 > day2
     then []
-    else 
-        let fun count_month(from : int, to : int) =
-                if from = to
-                then what_month(to)::[]
-                else what_month(from)::count_month(from + 1, to) 
-        in count_month(day1, day2)
-        end
+    else what_month day1 :: month_range(day1 + 1, day2)
 
 (*Exercise 11: takes a list of dates and evaluates to an (int*int*int) option. 
 It evaluates to NONE if the list has no dates and SOME d if the date d is the 
